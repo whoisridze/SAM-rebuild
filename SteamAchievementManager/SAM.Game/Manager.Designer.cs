@@ -54,6 +54,8 @@
             this._InvertAllButton = new System.Windows.Forms.ToolStripButton();
             this._UnlockAllButton = new System.Windows.Forms.ToolStripButton();
             this._UseRandomDelayCheckBox = new System.Windows.Forms.ToolStripButton();
+            this._DelayPresetLabel = new System.Windows.Forms.ToolStripLabel();
+            this._DelayPresetComboBox = new System.Windows.Forms.ToolStripComboBox();
             this._MinDelayLabel = new System.Windows.Forms.ToolStripLabel();
             this._MinDelayTextBox = new System.Windows.Forms.ToolStripTextBox();
             this._MaxDelayLabel = new System.Windows.Forms.ToolStripLabel();
@@ -253,6 +255,8 @@
             this._UnlockAllButton,
             _ToolStripSeparator1,
             this._UseRandomDelayCheckBox,
+            this._DelayPresetLabel,
+            this._DelayPresetComboBox,
             this._MinDelayLabel,
             this._MinDelayTextBox,
             this._MaxDelayLabel,
@@ -312,6 +316,29 @@
             this._UseRandomDelayCheckBox.Text = "Random Delay";
             this._UseRandomDelayCheckBox.ToolTipText = "Enable random delays when unlocking achievements to make it look more natural.";
             //
+            // _DelayPresetLabel
+            //
+            this._DelayPresetLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this._DelayPresetLabel.Name = "_DelayPresetLabel";
+            this._DelayPresetLabel.Size = new System.Drawing.Size(40, 22);
+            this._DelayPresetLabel.Text = "Preset";
+            //
+            // _DelayPresetComboBox
+            //
+            this._DelayPresetComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this._DelayPresetComboBox.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this._DelayPresetComboBox.Name = "_DelayPresetComboBox";
+            this._DelayPresetComboBox.Size = new System.Drawing.Size(100, 25);
+            this._DelayPresetComboBox.ToolTipText = "Select a preset delay category";
+            this._DelayPresetComboBox.Items.AddRange(new object[] {
+            "Fast (3-10s)",
+            "Normal (30-120s)",
+            "Realistic (2-10min)",
+            "Very Long (10-30min)",
+            "Custom"});
+            this._DelayPresetComboBox.SelectedIndex = 2;
+            this._DelayPresetComboBox.SelectedIndexChanged += new System.EventHandler(this.OnDelayPresetChanged);
+            //
             // _MinDelayLabel
             //
             this._MinDelayLabel.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -323,8 +350,8 @@
             //
             this._MinDelayTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this._MinDelayTextBox.Name = "_MinDelayTextBox";
-            this._MinDelayTextBox.Size = new System.Drawing.Size(35, 25);
-            this._MinDelayTextBox.Text = "5";
+            this._MinDelayTextBox.Size = new System.Drawing.Size(40, 25);
+            this._MinDelayTextBox.Text = "120";
             this._MinDelayTextBox.ToolTipText = "Minimum delay in seconds between achievements";
             //
             // _MaxDelayLabel
@@ -338,8 +365,8 @@
             //
             this._MaxDelayTextBox.Font = new System.Drawing.Font("Segoe UI", 9F);
             this._MaxDelayTextBox.Name = "_MaxDelayTextBox";
-            this._MaxDelayTextBox.Size = new System.Drawing.Size(35, 25);
-            this._MaxDelayTextBox.Text = "30";
+            this._MaxDelayTextBox.Size = new System.Drawing.Size(40, 25);
+            this._MaxDelayTextBox.Text = "600";
             this._MaxDelayTextBox.ToolTipText = "Maximum delay in seconds between achievements";
             //
             // _DisplayLabel
@@ -475,6 +502,8 @@
         private System.Windows.Forms.ToolStripButton _InvertAllButton;
         private System.Windows.Forms.ToolStripButton _UnlockAllButton;
         private System.Windows.Forms.ToolStripButton _UseRandomDelayCheckBox;
+        private System.Windows.Forms.ToolStripLabel _DelayPresetLabel;
+        private System.Windows.Forms.ToolStripComboBox _DelayPresetComboBox;
         private System.Windows.Forms.ToolStripLabel _MinDelayLabel;
         private System.Windows.Forms.ToolStripTextBox _MinDelayTextBox;
         private System.Windows.Forms.ToolStripLabel _MaxDelayLabel;

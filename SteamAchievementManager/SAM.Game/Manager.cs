@@ -1034,5 +1034,32 @@ namespace SAM.Game
         {
             this.GetAchievements();
         }
+
+        private void OnDelayPresetChanged(object sender, EventArgs e)
+        {
+            // Update min/max delay values based on selected preset
+            switch (this._DelayPresetComboBox.SelectedIndex)
+            {
+                case 0: // Fast (3-10s)
+                    this._MinDelayTextBox.Text = "3";
+                    this._MaxDelayTextBox.Text = "10";
+                    break;
+                case 1: // Normal (30-120s)
+                    this._MinDelayTextBox.Text = "30";
+                    this._MaxDelayTextBox.Text = "120";
+                    break;
+                case 2: // Realistic (2-10min)
+                    this._MinDelayTextBox.Text = "120";
+                    this._MaxDelayTextBox.Text = "600";
+                    break;
+                case 3: // Very Long (10-30min)
+                    this._MinDelayTextBox.Text = "600";
+                    this._MaxDelayTextBox.Text = "1800";
+                    break;
+                case 4: // Custom
+                    // Don't change the values, user will input them
+                    break;
+            }
+        }
     }
 }
