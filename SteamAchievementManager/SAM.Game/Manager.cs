@@ -651,12 +651,34 @@ namespace SAM.Game
             }
 
             Random random = new();
+
+            // Shuffle achievements if randomize order is enabled
+            if (this._RandomizeOrderCheckBox.Checked)
+            {
+                // Fisher-Yates shuffle
+                for (int i = achievements.Count - 1; i > 0; i--)
+                {
+                    int j = random.Next(i + 1);
+                    var temp = achievements[i];
+                    achievements[i] = achievements[j];
+                    achievements[j] = temp;
+                }
+            }
+
+            // Show progress bar
+            this._UnlockProgressBar.Visible = true;
+            this._UnlockProgressBar.Minimum = 0;
+            this._UnlockProgressBar.Maximum = achievements.Count;
+            this._UnlockProgressBar.Value = 0;
+
             int totalProcessed = 0;
+            DateTime startTime = DateTime.Now;
 
             for (int i = 0; i < achievements.Count; i++)
             {
                 if (cancellationToken.IsCancellationRequested)
                 {
+                    this._UnlockProgressBar.Visible = false;
                     return -1;
                 }
 
@@ -665,6 +687,7 @@ namespace SAM.Game
                 // Set the achievement
                 if (this._SteamClient.SteamUserStats.SetAchievement(info.Id, info.IsAchieved) == false)
                 {
+                    this._UnlockProgressBar.Visible = false;
                     MessageBox.Show(
                         this,
                         $"An error occurred while setting the state for {info.Id}, aborting store.",
@@ -675,23 +698,49 @@ namespace SAM.Game
                 }
 
                 totalProcessed++;
+                this._UnlockProgressBar.Value = totalProcessed;
 
-                // Update status
-                this._GameStatusLabel.Text = $"Processing achievement {i + 1}/{achievements.Count}: {info.Name}";
+                // Calculate ETA
+                TimeSpan elapsed = DateTime.Now - startTime;
+                double avgTimePerAchievement = elapsed.TotalSeconds / totalProcessed;
+                int remaining = achievements.Count - totalProcessed;
+                int etaSeconds = (int)(avgTimePerAchievement * remaining);
+
+                // Update status with progress and ETA
+                string etaText = FormatTimeSpan(TimeSpan.FromSeconds(etaSeconds));
+                this._GameStatusLabel.Text = $"Processing {i + 1}/{achievements.Count}: {info.Name} | ETA: {etaText}";
                 Application.DoEvents();
 
                 // Delay before the next achievement (but not after the last one)
                 if (i < achievements.Count - 1)
                 {
                     int delaySec = random.Next(minDelaySec, maxDelaySec + 1);
-                    this._GameStatusLabel.Text = $"Waiting {delaySec} seconds before next achievement... ({i + 1}/{achievements.Count} done)";
+                    this._GameStatusLabel.Text = $"Waiting {delaySec}s... ({i + 1}/{achievements.Count} done) | ETA: {etaText}";
                     Application.DoEvents();
 
                     await Task.Delay(delaySec * 1000, cancellationToken);
                 }
             }
 
+            // Hide progress bar when done
+            this._UnlockProgressBar.Visible = false;
             return totalProcessed;
+        }
+
+        private static string FormatTimeSpan(TimeSpan timeSpan)
+        {
+            if (timeSpan.TotalHours >= 1)
+            {
+                return _($"{(int)timeSpan.TotalHours}h {timeSpan.Minutes}m");
+            }
+            else if (timeSpan.TotalMinutes >= 1)
+            {
+                return _($"{(int)timeSpan.TotalMinutes}m {timeSpan.Seconds}s");
+            }
+            else
+            {
+                return _($"{timeSpan.Seconds}s");
+            }
         }
 
         private int StoreStatistics()

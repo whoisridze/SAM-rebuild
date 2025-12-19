@@ -41,6 +41,7 @@
             this._MainStatusStrip = new System.Windows.Forms.StatusStrip();
             this._CountryStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this._GameStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this._UnlockProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this._DownloadStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this._CallbackTimer = new System.Windows.Forms.Timer(this.components);
             this._MainTabControl = new System.Windows.Forms.TabControl();
@@ -60,6 +61,7 @@
             this._MinDelayTextBox = new System.Windows.Forms.ToolStripTextBox();
             this._MaxDelayLabel = new System.Windows.Forms.ToolStripLabel();
             this._MaxDelayTextBox = new System.Windows.Forms.ToolStripTextBox();
+            this._RandomizeOrderCheckBox = new System.Windows.Forms.ToolStripButton();
             this._DisplayLabel = new System.Windows.Forms.ToolStripLabel();
             this._DisplayLockedOnlyButton = new System.Windows.Forms.ToolStripButton();
             this._DisplayUnlockedOnlyButton = new System.Windows.Forms.ToolStripButton();
@@ -146,10 +148,11 @@
             this._AchievementImageList.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // _MainStatusStrip
-            // 
+            //
             this._MainStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._CountryStatusLabel,
             this._GameStatusLabel,
+            this._UnlockProgressBar,
             this._DownloadStatusLabel});
             this._MainStatusStrip.Location = new System.Drawing.Point(0, 370);
             this._MainStatusStrip.Name = "_MainStatusStrip";
@@ -162,14 +165,20 @@
             this._CountryStatusLabel.Size = new System.Drawing.Size(0, 17);
             // 
             // _GameStatusLabel
-            // 
+            //
             this._GameStatusLabel.Name = "_GameStatusLabel";
-            this._GameStatusLabel.Size = new System.Drawing.Size(555, 17);
+            this._GameStatusLabel.Size = new System.Drawing.Size(455, 17);
             this._GameStatusLabel.Spring = true;
             this._GameStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
+            //
+            // _UnlockProgressBar
+            //
+            this._UnlockProgressBar.Name = "_UnlockProgressBar";
+            this._UnlockProgressBar.Size = new System.Drawing.Size(100, 16);
+            this._UnlockProgressBar.Visible = false;
+            //
             // _DownloadStatusLabel
-            // 
+            //
             this._DownloadStatusLabel.Image = global::SAM.Game.Resources.Download;
             this._DownloadStatusLabel.Name = "_DownloadStatusLabel";
             this._DownloadStatusLabel.Size = new System.Drawing.Size(111, 17);
@@ -261,6 +270,7 @@
             this._MinDelayTextBox,
             this._MaxDelayLabel,
             this._MaxDelayTextBox,
+            this._RandomizeOrderCheckBox,
             _ToolStripSeparator2,
             this._DisplayLabel,
             this._DisplayLockedOnlyButton,
@@ -368,6 +378,18 @@
             this._MaxDelayTextBox.Size = new System.Drawing.Size(40, 25);
             this._MaxDelayTextBox.Text = "600";
             this._MaxDelayTextBox.ToolTipText = "Maximum delay in seconds between achievements";
+            //
+            // _RandomizeOrderCheckBox
+            //
+            this._RandomizeOrderCheckBox.CheckOnClick = true;
+            this._RandomizeOrderCheckBox.Checked = true;
+            this._RandomizeOrderCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this._RandomizeOrderCheckBox.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this._RandomizeOrderCheckBox.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this._RandomizeOrderCheckBox.Name = "_RandomizeOrderCheckBox";
+            this._RandomizeOrderCheckBox.Size = new System.Drawing.Size(105, 22);
+            this._RandomizeOrderCheckBox.Text = "Randomize Order";
+            this._RandomizeOrderCheckBox.ToolTipText = "Unlock achievements in random order instead of alphabetically";
             //
             // _DisplayLabel
             //
@@ -489,6 +511,7 @@
         private System.Windows.Forms.StatusStrip _MainStatusStrip;
         private System.Windows.Forms.ToolStripStatusLabel _CountryStatusLabel;
         private System.Windows.Forms.ToolStripStatusLabel _GameStatusLabel;
+        private System.Windows.Forms.ToolStripProgressBar _UnlockProgressBar;
         private System.Windows.Forms.ImageList _AchievementImageList;
         private System.Windows.Forms.Timer _CallbackTimer;
         private System.Windows.Forms.TabControl _MainTabControl;
@@ -508,6 +531,7 @@
         private System.Windows.Forms.ToolStripTextBox _MinDelayTextBox;
         private System.Windows.Forms.ToolStripLabel _MaxDelayLabel;
         private System.Windows.Forms.ToolStripTextBox _MaxDelayTextBox;
+        private System.Windows.Forms.ToolStripButton _RandomizeOrderCheckBox;
         private System.Windows.Forms.DataGridView _StatisticsDataGridView;
         private System.Windows.Forms.ToolStripButton _ResetButton;
         private System.Windows.Forms.ToolStripStatusLabel _DownloadStatusLabel;
